@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Heladería Pro</title>
+  <style>
+    body { font-family: sans-serif; max-width: 600px; margin: 2rem auto; background: #fdf6f0; color: #333; }
+    h1 { text-align: center; }
+    form, .pedidos { margin-top: 2rem; }
+    select, button { padding: 0.5rem; font-size: 1rem; }
+    .pedidos { background: #fff3; padding: 1rem; border: 1px solid #ddd; border-radius: 8px; }
+    .pedido { margin-bottom: 0.5rem; }
+  </style>
+</head>
+<body>
+  <h1>Bienvenido a la heladería</h1>
+
+  <form action="/ordenar" method="post">
+    <label for="sabor">Elige tu helado:</label><br>
+    <select name="sabor" id="sabor">
+      {% for helado in helados %}
+        <option value="{{ helado.id }}">{{ helado.sabor }} - ${{ helado.precio }}</option>
+      {% endfor %}
+    </select>
+    <button type="submit">Ordenar</button>
+  </form>
+
+  <div class="pedidos">
+    <h2>Pedidos realizados:</h2>
+    {% for pedido in pedidos %}
+      <div class="pedido">🍦 {{ pedido["sabor"] }} - ${{ pedido["precio"] }}</div>
+    {% else %}
+      <div>Aún no hay pedidos...</div>
+    {% endfor %}
+  </div>
+</body>
+</html>

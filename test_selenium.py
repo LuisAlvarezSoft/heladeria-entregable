@@ -1,9 +1,23 @@
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
 import time
+import os
+import platform
 
-driver = webdriver.Chrome()
+options = webdriver.ChromeOptions()
+options.add_argument("--headless")
+options.add_argument("--no-sandbox")
+options.add_argument("--disable-dev-shm-usage")
+
+# DEste if es para que funcione en github, debido a que funciona con linux y toca indicarle unas bobadas y aja :(
+if platform.system() == "Linux":
+    service = Service("/snap/bin/chromium.chromedriver")
+    driver = webdriver.Chrome(service=service, options=options)
+else:
+    driver = webdriver.Chrome(options=options)
+
 driver.get("http://localhost:5000")
 
 select = Select(driver.find_element(By.ID, "sabor"))
